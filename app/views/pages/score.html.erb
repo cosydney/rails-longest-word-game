@@ -1,2 +1,37 @@
-<h1>Pages#score</h1>
-<p>Find me in app/views/pages/score.html.erb</p>
+
+<div class="text-center">
+  <h2>Grid was</h2>
+  <h3> <%= @grid.join(" ") %></h3>
+  <h2>Results</h2>
+  <p>Your word : <%= @answer %> </p>
+  <h2>Score</h2>
+</div>
+
+  <ul class="text-center">
+    <li class="list-inline"><strong>
+      Time taken to answer:</strong>  <%= @score[:time].round %> seconds </li>
+    <li class="list-inline"><strong>
+      Translation:  </strong><%= @score[:translation] %></li>
+    <li class="list-inline"><strong>
+      Your score: </strong> <%= @score[:score].round %> </li>
+    <li class="list-inline"><strong>
+      Message:</strong> <%= @score[:message].capitalize  %></li>
+  </ul>
+<br>
+<div class="text-center">
+ <%= link_to "Play again", game_path, :class => "btn btn-primary" %>
+</div>
+
+
+
+
+<% if session[:number_of_games].nil? %>
+  <% session[:number_of_games] = 1 %>
+  <% session[:score] = @score[:score] %>
+  <% session[:time] = @score[:time] %>
+  <% session[:words] = @answer %>
+<% else session[:number_of_games] += 1  %>
+  <% session[:score] += @score[:score] %>
+  <% session[:time] += @score[:time] %>
+  <% session[:words] += ", " + @answer %>
+<% end  %>
